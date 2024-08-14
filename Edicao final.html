@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escolhas Cantina</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .menu-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 250px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .menu-item img {
+            width: 100%;
+            height: auto;
+        }
+        .menu-item-content {
+            padding: 15px;
+        }
+        .menu-item h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        .menu-item p {
+            margin: 10px 0;
+            color: #555;
+        }
+        .menu-item .price {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        .add-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px 0;
+        }
+        .add-button:hover {
+            background-color: #2980b9;
+        }
+        /* Estilos para o popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .popup-content {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .popup-content input, .popup-content textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .popup-content textarea {
+            resize: vertical;
+        }
+        .popup-content button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .popup-content button:hover {
+            background-color: #2980b9;
+        }
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Escolhas Cantina</h1>
+
+    <button class="add-button" onclick="showPopup()">Adicionar novo Produto</button>
+
+    <div id="menu" class="menu">
+        <!-- Itens do menu serão adicionados aqui -->
+    </div>
+
+    <!-- Popup para adicionar item -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <button class="close-button" onclick="hidePopup()">×</button>
+            <h2>Adicionar novo Produto</h2>
+            <form id="menu-form">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" required>
+
+                <label for="description">Descrição:</label>
+                <textarea id="description" rows="3" required></textarea>
+
+                <label for="price">Preço:</label>
+                <input type="text" id="price" required>
+
+                <label for="image">Imagem:</label>
+                <input type="text" id="image" required>
+
+                <button type="submit">Adicionar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showPopup() {
+            document.getElementById('popup').style.display = 'flex';
+        }
+
+        function hidePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        document.getElementById('menu-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita o envio do formulário
+
+            // Obtém os valores dos campos do formulário
+            const name = document.getElementById('name').value;
+            const description = document.getElementById('description').value;
+            const price = document.getElementById('price').value;
+            const image = document.getElementById('image').value;
+
+            // Cria o HTML para o novo item
+            const itemHTML = `
+                <div class="menu-item">
+                    <img src="${image}" alt="${name}">
+                    <div class="menu-item-content">
+                        <h3>${name}</h3>
+                        <p>${description}</p>
+                        <p class="price">${price}</p>
+                    </div>
+                </div>
+            `;
+
+            // Adiciona o novo item à lista
+            const menu = document.getElementById('menu');
+            menu.innerHTML += itemHTML;
+
+            // Limpa o formulário e fecha o popup
+            document.getElementById('menu-form').reset();
+            hidePopup();
+        });
+    </script>
+</body>
+</html>
